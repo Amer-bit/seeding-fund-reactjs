@@ -13,8 +13,8 @@ ReactDOM.render(
   <React.StrictMode>
     <TopBar />
     <BrowserRouter>
-    <Header />
     <Provider store = { store } >
+      <Header />
       <App />
     </Provider>
     </BrowserRouter>
