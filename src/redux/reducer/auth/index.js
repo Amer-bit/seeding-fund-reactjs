@@ -1,4 +1,4 @@
-import { registerTypes, loginTypes } from "../../actions/auth";
+import { registerTypes, loginTypes, logOut } from "../../actions/auth";
 const initialState = {
     loggedIn: false,
     token: "",
@@ -20,7 +20,7 @@ export default function auth(state = initialState, action) {
             return {
                 ...state, loading: false, loggedIn: true,
             }
-            
+
         case registerTypes.REGESTER_FAILED:
             return {
                 ...state, loading: false,
@@ -32,15 +32,22 @@ export default function auth(state = initialState, action) {
             }
 
         case loginTypes.LOGIN_SUCCESS:
-            localStorage.setItem('token', action.payload)
+            localStorage.setItem('token', action.payload);
+            localStorage.setItem('loggedIn', true);
             return {
                 ...state, loading: false, loggedIn: true,
             }
 
-        
+
         case loginTypes.LOGIN_FAILED:
             return {
                 ...state, loading: false
+            }
+
+        case logOut.LOG_OUT:
+            localStorage.clear();
+            return {
+                ...state, loading: false, loggedIn: null, isAdmin: null, token: null
             }
 
         default:
