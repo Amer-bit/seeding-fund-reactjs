@@ -25,6 +25,19 @@ export const loginAction = user => async dispatch => {
     }
 }
 
+export const adminLoginAction = user => async dispatch => {
+    dispatch({ type: loginTypes.LOGIN_REQUEST })
+    if(user){
+        try {
+            let { data } = await api.post(`/admin/login`, { ...user });
+            dispatch({ type: loginTypes.LOGIN_SUCCESS, payload: data })
+        } catch (error) {
+            console.error(error);
+            dispatch({ type: loginTypes.LOGIN_FAILED, payload: error })
+        }
+    }
+}
+
 export const registerAction = user => async dispatch => {
     dispatch({ type: registerTypes.REGESTER_REQUEST })
     if(user){
