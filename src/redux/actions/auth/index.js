@@ -12,12 +12,20 @@ export const loginTypes = {
     LOGIN_FAILED: 'LOGIN_FAILED',
 }
 
+export const logOut = {
+    LOG_OUT: 'LOG_OUT'
+}
+
+export const logOutAction = () => dispatch => {
+    dispatch({ type: logOut.LOG_OUT });
+}
+
 export const loginAction = user => async dispatch => {
     dispatch({ type: loginTypes.LOGIN_REQUEST })
     if(user){
         try {
-            let { data } = await api.post(`/login`, { ...user });
-            dispatch({ type: loginTypes.LOGIN_SUCCESS, payload: data })
+            let { data: { accessToken } } = await api.post(`/login`, { ...user });
+            dispatch({ type: loginTypes.LOGIN_SUCCESS, payload: accessToken })
         } catch (error) {
             console.error(error);
             dispatch({ type: loginTypes.LOGIN_FAILED, payload: error })
@@ -29,8 +37,8 @@ export const adminLoginAction = user => async dispatch => {
     dispatch({ type: loginTypes.LOGIN_REQUEST })
     if(user){
         try {
-            let { data } = await api.post(`/admin/login`, { ...user });
-            dispatch({ type: loginTypes.LOGIN_SUCCESS, payload: data })
+            let { data: { accessToken } } = await api.post(`/admin/login`, { ...user });
+            dispatch({ type: loginTypes.LOGIN_SUCCESS, payload: accessToken })
         } catch (error) {
             console.error(error);
             dispatch({ type: loginTypes.LOGIN_FAILED, payload: error })
