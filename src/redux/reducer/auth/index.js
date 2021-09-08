@@ -20,17 +20,22 @@ export default function auth(state = initialState, action) {
             return {
                 ...state, loading: false, loggedIn: true,
             }
+            
         case registerTypes.REGESTER_FAILED:
             return {
                 ...state, loading: false,
             }
+
         case loginTypes.LOGIN_REQUEST:
             return {
                 ...state, loading: true,
             }
 
         case loginTypes.LOGIN_SUCCESS:
-            console.log("success");
+            localStorage.setItem('token', action.payload)
+            return {
+                ...state, loading: false, loggedIn: true,
+            }
 
         
         case loginTypes.LOGIN_FAILED:
