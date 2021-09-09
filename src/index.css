@@ -11,3 +11,4 @@ code {
 
 @import './components/top-bar/top-bar.css';
 @import './components/header/header.css';
+@import './components/admin-funds/bar-chart.css'

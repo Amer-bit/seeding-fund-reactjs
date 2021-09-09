@@ -32,12 +32,11 @@ export const requestFundAction = (fundRequest) => async dispatch => {
     // dispatch({ type: createFundsTypes.FUNDS_REQUEST });
     try {
         let token = localStorage.getItem('token');
-        const response = await api.post('/projectowner/createfundrequest', fundRequest, {
+        await api.post('/projectowner/createfundrequest', fundRequest, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             }
         });
-        console.log(response);
         // dispatch({ type: createFundsTypes.FUNDS_SUCCESS, payload: data })
     } catch (error) {
         console.error(error)

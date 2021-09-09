@@ -10,12 +10,12 @@ const Header = () => {
     const isAdmin = localStorage.getItem('isAdmin');
     const dispatch = useDispatch();
     const { isAdmin: adminSigned, loggedIn: isLogged } = useSelector(state => state.auth);
-    useEffect(() =>{
-        if(isLogged || loggedIn) history.push('/viewmyfunds')
-        else history.push('/');
+    useEffect(() => {
+        if ((isLogged || loggedIn) && !isAdmin) history.push('/viewmyfunds');
+        if (isAdmin) history.push('/users')
     }, [adminSigned, isLogged]);
 
-    function logOutHandler(){
+    function logOutHandler() {
         dispatch(logOutAction())
     }
 
@@ -26,11 +26,18 @@ const Header = () => {
                 <nav className="menu">
                     <Show show={!loggedIn}>
                         <Link className="link" to="/">Login</Link>
+                        <Link className="link" to="/admin">Admin Login</Link>
                         <Link className="link" to="/register">Register</Link>
                     </Show>
                     <Show show={loggedIn}>
-                        <Link className="link" to="/viewmyfunds"> My Fund Reuests </Link>
-                        <Link className="link" to="/requestfund"> Request Fund </Link>
+                        <Show show={!isAdmin}>
+                            <Link className="link" to="/requestfund"> Request Fund </Link>
+                            <Link className="link" to="/viewmyfunds"> My Fund Reuests </Link>
+                        </Show>
+                        <Show show={isAdmin}>
+                            <Link className="link" to="/users">Users Fund Requests</Link>
+                            <Link className="link" to="/chart">Chart</Link>
+                        </Show>
                         <Link className="link" onClick={logOutHandler} to="/">Log out</Link>
                     </Show>
 
