@@ -16,7 +16,8 @@ export default function auth(state = initialState, action) {
             }
 
         case registerTypes.REGESTER_SUCCESS:
-            localStorage.setItem('token', action.payload)
+            localStorage.setItem('token', action.payload);
+            localStorage.setItem('loggedIn', true);
             return {
                 ...state, loading: false, loggedIn: true,
             }
@@ -36,6 +37,14 @@ export default function auth(state = initialState, action) {
             localStorage.setItem('loggedIn', true);
             return {
                 ...state, loading: false, loggedIn: true,
+            }
+        
+        case loginTypes.ADMIN_LOGIN_SUCCESS:
+            localStorage.setItem('token', action.payload);
+            localStorage.setItem('loggedIn', true);
+            localStorage.setItem('isAdmin', true);
+            return {
+                ...state, loading: false, loggedIn: true, isAdmin: true,
             }
 
 
