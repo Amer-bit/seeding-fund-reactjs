@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { Container, TextField, MenuItem, Select, Box, InputLabel, Button } from '@material-ui/core';
 import { requestFundAction } from '../../redux/actions/funds'
 
 const FundRequest = () => {
     const [fundRequest, setFundRequest] = useState({});
+    const history = useHistory();
     const dispatch = useDispatch();
     const sectors = {
         it: 'IT',
@@ -16,6 +18,10 @@ const FundRequest = () => {
 
     function onChangeHandler(e) {
         setFundRequest({ ...fundRequest, [e.target.name]: e.target.value });
+    }
+
+    function submitHandler(){
+        history.push('/viewmyfunds')
     }
 
     return (
@@ -63,16 +69,13 @@ const FundRequest = () => {
                     fullWidth
                 >
                 </TextField>
-
                 <Box mt={5}>
                 </Box>
-
                 <Button
-            onClick={() => dispatch(requestFundAction(fundRequest))}
+            onClick={() => dispatch(requestFundAction(fundRequest)) && submitHandler()}
             fullWidth
             variant="contained"
             color="primary"
-            // disabled={loading}
           >
             Submit
           </Button>
