@@ -10,6 +10,7 @@ export const loginTypes = {
     LOGIN_REQUEST: 'LOGIN_REQUEST',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_FAILED: 'LOGIN_FAILED',
+    ADMIN_LOGIN_SUCCESS: 'ADMIN_LOGIN_SUCCESS',
 }
 
 export const logOut = {
@@ -38,7 +39,7 @@ export const adminLoginAction = user => async dispatch => {
     if(user){
         try {
             let { data: { accessToken } } = await api.post(`/admin/login`, { ...user });
-            dispatch({ type: loginTypes.LOGIN_SUCCESS, payload: accessToken })
+            dispatch({ type: loginTypes.ADMIN_LOGIN_SUCCESS, payload: accessToken })
         } catch (error) {
             console.error(error);
             dispatch({ type: loginTypes.LOGIN_FAILED, payload: error })
